@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { SearchBar } from '@/components/SearchBar';
 import { SearchResults } from '@/components/SearchResults';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -122,28 +123,29 @@ const Index = () => {
   const featuredCompanies = ['Google', 'Meta', 'Apple', 'Microsoft', 'Amazon', 'Netflix'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/[0.02]">
       {/* Header */}
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-40">
+      <header className="border-b border-border/20 bg-card/80 backdrop-blur-xl sticky top-0 z-40 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-job-secondary flex items-center justify-center">
-                <Briefcase className="h-5 w-5 text-white" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/25">
+                <Briefcase className="h-6 w-6 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-job-secondary bg-clip-text text-transparent">
+              <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
                 JobPortal
               </span>
             </div>
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Jobs</a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Companies</a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Network</a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">Learn</a>
+            <nav className="hidden md:flex items-center gap-8">
+              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Jobs</a>
+              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Companies</a>
+              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Network</a>
+              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Learn</a>
             </nav>
             <div className="flex items-center gap-3">
-              <Button variant="ghost">Sign In</Button>
-              <Button variant="hero">Join Now</Button>
+              <ThemeToggle />
+              <Button variant="ghost" className="text-sm font-medium">Sign In</Button>
+              <Button variant="default" className="text-sm font-medium bg-primary hover:bg-primary/90">Join Now</Button>
             </div>
           </div>
         </div>
@@ -153,12 +155,12 @@ const Index = () => {
       <main className="container mx-auto px-4">
         {!searchQuery ? (
           /* Hero Section */
-          <div className="py-20 text-center">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-job-secondary bg-clip-text text-transparent leading-tight">
+          <div className="py-24 text-center">
+            <div className="max-w-5xl mx-auto">
+              <h1 className="text-5xl md:text-7xl font-extrabold mb-8 bg-gradient-to-r from-foreground via-primary to-primary/80 bg-clip-text text-transparent leading-tight tracking-tight">
                 Find Your Dream Job Today
               </h1>
-              <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto leading-relaxed font-medium">
                 Connect with top companies, discover exciting opportunities, and advance your career with our AI-powered job matching platform.
               </p>
               
