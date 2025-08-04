@@ -90,12 +90,12 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             onKeyPress={handleKeyPress}
             onFocus={() => query && setShowFilters(true)}
             className={cn(
-              "w-full pl-12 pr-28 h-16 text-lg rounded-2xl border-2 transition-all duration-300",
+              "w-full pl-12 pr-24 h-12 text-base rounded-xl border-2 transition-all duration-300",
               "bg-card/80 backdrop-blur-md",
-              "hover:border-primary/40 focus:border-primary focus:ring-4 focus:ring-primary/15",
-              "shadow-[0_10px_40px_-12px_rgba(0,0,0,0.1)]",
+              "hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/10",
+              "shadow-sm",
               "placeholder:text-muted-foreground/70",
-              isExpanded && "shadow-[0_20px_60px_-12px_hsl(var(--primary)/0.15)] border-primary/50"
+              isExpanded && "shadow-md border-primary/50"
             )}
           />
           <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-2">
@@ -111,13 +111,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             )}
             <Button
               variant="default"
-              size="default"
+              size="sm"
               onClick={handleSearch}
               disabled={!query.trim()}
-              className="rounded-xl px-8 h-12 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all duration-200 hover:scale-105"
+              className="rounded-lg px-4 h-8 bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all duration-200"
             >
-              <Search className="h-5 w-5 mr-2" />
-              <span className="font-semibold">Search</span>
+              <Search className="h-4 w-4 mr-1" />
+              <span className="font-medium text-sm">Search</span>
             </Button>
           </div>
         </div>

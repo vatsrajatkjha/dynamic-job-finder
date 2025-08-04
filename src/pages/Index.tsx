@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { SearchBar } from '@/components/SearchBar';
-import { SearchResults } from '@/components/SearchResults';
+import { FilteredSearchResults } from '@/components/FilteredSearchResults';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight } from 'lucide-react';
+import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight, Shield, Clock, Target, Award, ChevronRight, PlayCircle, BookOpen, MessageSquare, Globe } from 'lucide-react';
 
 // Mock data for demonstration
 const mockJobs = [
@@ -127,8 +127,9 @@ const Index = () => {
       {/* Header */}
       <header className="border-b border-border/20 bg-card/80 backdrop-blur-xl sticky top-0 z-40 shadow-sm">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="flex items-center justify-between gap-8">
+            {/* Logo */}
+            <div className="flex items-center gap-3 flex-shrink-0">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/25">
                 <Briefcase className="h-6 w-6 text-white" />
               </div>
@@ -136,16 +137,31 @@ const Index = () => {
                 JobPortal
               </span>
             </div>
-            <nav className="hidden md:flex items-center gap-8">
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Jobs</a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Companies</a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Network</a>
-              <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Learn</a>
-            </nav>
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
-              <Button variant="ghost" className="text-sm font-medium">Sign In</Button>
-              <Button variant="default" className="text-sm font-medium bg-primary hover:bg-primary/90">Join Now</Button>
+
+            {/* Search Bar in Header */}
+            <div className="flex-1 max-w-2xl mx-4">
+              <SearchBar
+                onSearch={handleSearch}
+                onFilterSelect={handleFilterSelect}
+                selectedFilter={selectedFilter}
+                isExpanded={isSearchExpanded}
+                setIsExpanded={setIsSearchExpanded}
+              />
+            </div>
+
+            {/* Navigation & Actions */}
+            <div className="flex items-center gap-6">
+              <nav className="hidden lg:flex items-center gap-6">
+                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Jobs</a>
+                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Companies</a>
+                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Network</a>
+                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Learn</a>
+              </nav>
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
+                <Button variant="ghost" className="text-sm font-medium">Sign In</Button>
+                <Button variant="default" className="text-sm font-medium bg-primary hover:bg-primary/90">Join Now</Button>
+              </div>
             </div>
           </div>
         </div>
@@ -164,16 +180,6 @@ const Index = () => {
                 Connect with top companies, discover exciting opportunities, and advance your career with our AI-powered job matching platform.
               </p>
               
-              {/* Search Bar */}
-              <div className="mb-16">
-                <SearchBar
-                  onSearch={handleSearch}
-                  onFilterSelect={handleFilterSelect}
-                  selectedFilter={selectedFilter}
-                  isExpanded={isSearchExpanded}
-                  setIsExpanded={setIsSearchExpanded}
-                />
-              </div>
 
               {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
@@ -199,7 +205,7 @@ const Index = () => {
         ) : (
           /* Search Results */
           <div className="py-8">
-            <SearchResults
+            <FilteredSearchResults
               query={searchQuery}
               filter={selectedFilter}
               results={searchResults}
@@ -207,72 +213,231 @@ const Index = () => {
           </div>
         )}
 
-        {/* Trending Section - Only show when not searching */}
+        {/* Comprehensive Sections - Only show when not searching */}
         {!searchQuery && (
-          <div className="py-16">
-            <div className="grid lg:grid-cols-2 gap-12">
-              {/* Trending Skills */}
-              <Card className="p-8 bg-gradient-to-br from-card to-primary/5 border-primary/10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-job-secondary/10 flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-primary" />
+          <>
+            {/* Why Choose Us Section */}
+            <div className="py-20">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl font-bold mb-4">Why Choose JobPortal?</h2>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Experience the future of job searching with our cutting-edge platform designed for modern professionals.
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <Card className="p-6 text-center border-primary/10 bg-gradient-to-br from-card to-primary/5 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Shield className="h-8 w-8 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">Trending Skills</h3>
-                    <p className="text-muted-foreground">Most in-demand skills this month</p>
+                  <h3 className="text-lg font-semibold mb-2">Trusted Platform</h3>
+                  <p className="text-muted-foreground text-sm">Verified companies and secure data protection for all users.</p>
+                </Card>
+                <Card className="p-6 text-center border-primary/10 bg-gradient-to-br from-card to-primary/5 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Target className="h-8 w-8 text-primary" />
                   </div>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {trendingSkills.map((skill, index) => (
-                    <Badge
-                      key={index}
-                      variant="secondary"
-                      className="hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors"
-                    >
-                      {skill}
-                    </Badge>
-                  ))}
-                </div>
-                <Button variant="outline" className="w-full mt-6 group">
-                  Explore All Skills
-                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Card>
-
-              {/* Featured Companies */}
-              <Card className="p-8 bg-gradient-to-br from-card to-job-secondary/5 border-job-secondary/10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-job-secondary/10 to-primary/10 flex items-center justify-center">
-                    <Building className="h-6 w-6 text-job-secondary" />
+                  <h3 className="text-lg font-semibold mb-2">AI-Powered Matching</h3>
+                  <p className="text-muted-foreground text-sm">Smart algorithms match you with the perfect job opportunities.</p>
+                </Card>
+                <Card className="p-6 text-center border-primary/10 bg-gradient-to-br from-card to-primary/5 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Clock className="h-8 w-8 text-primary" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-semibold">Featured Companies</h3>
-                    <p className="text-muted-foreground">Top employers hiring now</p>
+                  <h3 className="text-lg font-semibold mb-2">Real-Time Updates</h3>
+                  <p className="text-muted-foreground text-sm">Get instant notifications for new opportunities and applications.</p>
+                </Card>
+                <Card className="p-6 text-center border-primary/10 bg-gradient-to-br from-card to-primary/5 hover:shadow-lg transition-all duration-300 hover:scale-105">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Award className="h-8 w-8 text-primary" />
                   </div>
-                </div>
-                <div className="space-y-3">
-                  {featuredCompanies.slice(0, 4).map((company, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-background/50 transition-colors cursor-pointer">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/10 to-job-secondary/10 flex items-center justify-center">
-                          <Building className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <div className="font-medium">{company}</div>
-                          <div className="text-sm text-muted-foreground">Multiple positions</div>
-                        </div>
-                      </div>
-                      <Star className="h-4 w-4 text-warning fill-warning" />
-                    </div>
-                  ))}
-                </div>
-                <Button variant="outline" className="w-full mt-6 group">
-                  View All Companies
-                  <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Card>
+                  <h3 className="text-lg font-semibold mb-2">Career Growth</h3>
+                  <p className="text-muted-foreground text-sm">Access courses, mentorship, and career development resources.</p>
+                </Card>
+              </div>
             </div>
-          </div>
+
+            {/* Featured Jobs Section */}
+            <div className="py-20 bg-gradient-to-br from-muted/20 to-primary/5 rounded-3xl">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Featured Opportunities</h2>
+                <p className="text-xl text-muted-foreground">
+                  Discover the latest job openings from top companies
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {mockJobs.map((job) => (
+                  <Card key={job.id} className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 bg-card/80 backdrop-blur-sm">
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                        <Briefcase className="h-6 w-6 text-primary" />
+                      </div>
+                      {job.featured && <Badge variant="secondary" className="bg-primary/10 text-primary">Featured</Badge>}
+                    </div>
+                    <h3 className="font-semibold text-lg mb-2">{job.title}</h3>
+                    <p className="text-muted-foreground mb-1">{job.company}</p>
+                    <p className="text-sm text-muted-foreground mb-4">{job.location} • {job.type}</p>
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold text-primary">{job.salary}</span>
+                      <Button variant="outline" size="sm" className="group">
+                        Apply <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+              <div className="text-center mt-12">
+                <Button variant="default" size="lg" className="group">
+                  View All Jobs
+                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </div>
+
+            {/* Industry Insights & Resources */}
+            <div className="py-20">
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Trending Skills */}
+                <Card className="p-8 bg-gradient-to-br from-card to-primary/5 border-primary/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                      <TrendingUp className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold">Trending Skills</h3>
+                      <p className="text-muted-foreground">Most in-demand skills this month</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {trendingSkills.map((skill, index) => (
+                      <Badge
+                        key={index}
+                        variant="secondary"
+                        className="hover:bg-primary/10 hover:text-primary cursor-pointer transition-colors"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                  <Button variant="outline" className="w-full group">
+                    Explore All Skills
+                    <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+
+                {/* Career Resources */}
+                <Card className="p-8 bg-gradient-to-br from-card to-secondary/5 border-secondary/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
+                      <BookOpen className="h-6 w-6 text-secondary" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold">Career Resources</h3>
+                      <p className="text-muted-foreground">Tools to advance your career</p>
+                    </div>
+                  </div>
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-background/50 transition-colors cursor-pointer">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
+                        <PlayCircle className="h-4 w-4 text-secondary" />
+                      </div>
+                      <div>
+                        <div className="font-medium">Interview Prep</div>
+                        <div className="text-sm text-muted-foreground">Practice with AI</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-background/50 transition-colors cursor-pointer">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
+                        <BookOpen className="h-4 w-4 text-secondary" />
+                      </div>
+                      <div>
+                        <div className="font-medium">Resume Builder</div>
+                        <div className="text-sm text-muted-foreground">Create perfect resumes</div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-background/50 transition-colors cursor-pointer">
+                      <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
+                        <MessageSquare className="h-4 w-4 text-secondary" />
+                      </div>
+                      <div>
+                        <div className="font-medium">Career Coaching</div>
+                        <div className="text-sm text-muted-foreground">1-on-1 guidance</div>
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="outline" className="w-full group">
+                    Access Resources
+                    <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+
+                {/* Top Companies */}
+                <Card className="p-8 bg-gradient-to-br from-card to-accent/5 border-accent/10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center">
+                      <Building className="h-6 w-6 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold">Top Companies</h3>
+                      <p className="text-muted-foreground">Leading employers hiring now</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    {featuredCompanies.slice(0, 5).map((company, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-background/50 transition-colors cursor-pointer">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center">
+                            <Building className="h-4 w-4 text-accent" />
+                          </div>
+                          <div>
+                            <div className="font-medium">{company}</div>
+                            <div className="text-sm text-muted-foreground">Multiple positions</div>
+                          </div>
+                        </div>
+                        <Star className="h-4 w-4 text-warning fill-warning" />
+                      </div>
+                    ))}
+                  </div>
+                  <Button variant="outline" className="w-full group">
+                    View All Companies
+                    <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Card>
+              </div>
+            </div>
+
+            {/* Global Reach Section */}
+            <div className="py-20 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl">
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Global Opportunities</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  Connect with opportunities worldwide and build your international career
+                </p>
+              </div>
+              <div className="grid md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
+                    <Globe className="h-10 w-10 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">150+</h3>
+                  <p className="text-muted-foreground">Countries Covered</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center">
+                    <Users className="h-10 w-10 text-accent" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">5M+</h3>
+                  <p className="text-muted-foreground">Global Professionals</p>
+                </div>
+                <div className="text-center">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
+                    <Building className="h-10 w-10 text-secondary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">50K+</h3>
+                  <p className="text-muted-foreground">International Companies</p>
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </main>
 
