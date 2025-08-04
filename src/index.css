@@ -17,24 +17,50 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 220 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 220 100% 60%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 100% 50%;
+
+    /* Job Portal Specific Colors */
+    --job-primary: 220 100% 50%;
+    --job-secondary: 259 100% 65%;
+    --job-accent: 142 76% 36%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 100% 50%), hsl(259 100% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 100% 50% / 0.1), hsl(259 100% 65% / 0.1));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(220 14.3% 95.9%));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(220 100% 50% / 0.2);
+    --shadow-search: 0 8px 25px -8px hsl(220 100% 50% / 0.15);
+    --shadow-card: 0 4px 15px -4px hsl(220 8.9% 46.1% / 0.1);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-search: all 0.2s ease-out;
 
     --radius: 0.5rem;
 
