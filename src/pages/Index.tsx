@@ -169,12 +169,11 @@ const Index = () => {
                     <button
                       key={item.id}
                       onClick={() => setActiveNavItem(item.id)}
-                      className={cn(
-                        "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-secondary/80",
-                        isActive 
-                          ? "text-primary bg-primary/10 shadow-sm" 
-                          : "text-muted-foreground hover:text-foreground"
-                      )}
+                       className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-secondary/80 ${
+                         isActive 
+                           ? "text-primary bg-primary/10 shadow-sm" 
+                           : "text-muted-foreground hover:text-foreground"
+                       }`}
                     >
                       <IconComponent className="h-4 w-4" />
                       {item.label}
