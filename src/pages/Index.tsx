@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { FilteredSearchResults } from '@/components/FilteredSearchResults';
+import { SearchFilterModal, FilterOptions } from '@/components/SearchFilterModal';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight, Shield, Clock, Target, Award, ChevronRight, PlayCircle, BookOpen, MessageSquare, Globe, Network, GraduationCap, Bell, Settings } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 // Mock data for demonstration
 const mockJobs = [
@@ -102,10 +103,13 @@ const mockPeople = [
 ];
 
 const Index = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeNavItem, setActiveNavItem] = useState('jobs');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [currentSearchQuery, setCurrentSearchQuery] = useState('');
   const [searchResults] = useState({
     jobs: mockJobs,
     posts: mockPosts,
@@ -122,11 +126,29 @@ const Index = () => {
   ];
 
   const handleSearch = (query: string) => {
-    setSearchQuery(query);
+    if (query.trim()) {
+      setCurrentSearchQuery(query);
+      setShowFilterModal(true);
+      setIsSearchExpanded(true);
+    } else {
+      setSearchQuery('');
+      setCurrentSearchQuery('');
+    }
   };
 
   const handleFilterSelect = (filter: string) => {
     setSelectedFilter(filter);
+  };
+
+  const handleApplyFilters = (filters: FilterOptions) => {
+    setShowFilterModal(false);
+    // Navigate to job listing page with filters
+    navigate('/jobs', { 
+      state: { 
+        query: currentSearchQuery, 
+        filters 
+      } 
+    });
   };
 
   const trendingSkills = ['React', 'Python', 'Product Management', 'Data Science', 'DevOps', 'UI/UX Design'];
@@ -227,6 +249,14 @@ const Index = () => {
             </div>
           </div>
         ) : null}
+
+        {/* Search Filter Modal */}
+        <SearchFilterModal
+          isOpen={showFilterModal}
+          onClose={() => setShowFilterModal(false)}
+          searchQuery={currentSearchQuery}
+          onApplyFilters={handleApplyFilters}
+        />
 
         {/* Search Results Section */}
         {searchQuery && (
