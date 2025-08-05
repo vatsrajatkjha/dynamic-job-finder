@@ -5,7 +5,8 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight, Shield, Clock, Target, Award, ChevronRight, PlayCircle, BookOpen, MessageSquare, Globe } from 'lucide-react';
+import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight, Shield, Clock, Target, Award, ChevronRight, PlayCircle, BookOpen, MessageSquare, Globe, Network, GraduationCap, Bell, Settings } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 // Mock data for demonstration
 const mockJobs = [
@@ -102,6 +103,7 @@ const mockPeople = [
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeNavItem, setActiveNavItem] = useState('jobs');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchResults] = useState({
@@ -110,6 +112,14 @@ const Index = () => {
     companies: mockCompanies,
     people: mockPeople,
   });
+
+  // Navigation items with icons
+  const navItems = [
+    { id: 'jobs', label: 'Jobs', icon: Briefcase },
+    { id: 'companies', label: 'Companies', icon: Building },
+    { id: 'network', label: 'Network', icon: Network },
+    { id: 'learn', label: 'Learn', icon: GraduationCap },
+  ];
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
@@ -151,11 +161,26 @@ const Index = () => {
 
             {/* Navigation & Actions */}
             <div className="flex items-center gap-6">
-              <nav className="hidden lg:flex items-center gap-6">
-                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Jobs</a>
-                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Companies</a>
-                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Network</a>
-                <a href="#" className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105">Learn</a>
+              <nav className="hidden lg:flex items-center gap-1">
+                {navItems.map((item) => {
+                  const IconComponent = item.icon;
+                  const isActive = activeNavItem === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveNavItem(item.id)}
+                      className={cn(
+                        "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-secondary/80",
+                        isActive 
+                          ? "text-primary bg-primary/10 shadow-sm" 
+                          : "text-muted-foreground hover:text-foreground"
+                      )}
+                    >
+                      <IconComponent className="h-4 w-4" />
+                      {item.label}
+                    </button>
+                  );
+                })}
               </nav>
               <div className="flex items-center gap-3">
                 <ThemeToggle />
@@ -202,18 +227,22 @@ const Index = () => {
               </div>
             </div>
           </div>
-        ) : (
-          /* Search Results */
-          <div className="py-8 bg-gradient-to-b from-background to-secondary/10">
-            <FilteredSearchResults
-              query={searchQuery}
-              filter={selectedFilter}
-              results={searchResults}
-            />
-          </div>
+        ) : null}
+
+        {/* Search Results Section */}
+        {searchQuery && (
+          <section className="py-8 bg-gradient-to-b from-background to-secondary/10">
+            <div className="container mx-auto px-4">
+              <FilteredSearchResults
+                query={searchQuery}
+                filter={selectedFilter}
+                results={searchResults}
+              />
+            </div>
+          </section>
         )}
 
-        {/* Comprehensive Sections - Only show when not searching */}
+        {/* Main Content - Hide when searching */}
         {!searchQuery && (
           <>
             {/* Why Choose Us Section */}
