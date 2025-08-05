@@ -64,7 +64,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 
   const handleFilterClick = (filterId: string) => {
     onFilterSelect(filterId);
-    setShowFilters(false);
+    // Keep filters visible after selection
   };
 
   const clearSearch = () => {
@@ -72,6 +72,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     setIsExpanded(false);
     setShowFilters(false);
     onSearch('');
+    onFilterSelect('all');
   };
 
   return (
@@ -122,17 +123,20 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           </div>
         </div>
 
-        {/* Filter Dropdown */}
-        {showFilters && query && (
-          <div className="absolute top-full left-0 right-0 mt-3 bg-card/95 backdrop-blur-md border border-border/50 rounded-2xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.25)] z-50 animate-fade-in">
+        {/* Filter Dropdown - Always visible when search is active */}
+        {isExpanded && query && (
+          <div className="absolute top-full left-0 right-0 mt-3 bg-card/98 backdrop-blur-xl border border-border/60 rounded-2xl shadow-[0_25px_60px_-12px_rgba(0,0,0,0.25)] z-50 animate-fade-in">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Filter className="h-4 w-4 text-primary" />
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center border border-primary/20">
+                  <Filter className="h-5 w-5 text-primary" />
                 </div>
-                <span className="text-sm font-semibold text-foreground">Choose a filter</span>
+                <div>
+                  <span className="text-sm font-bold text-foreground">Filter Results</span>
+                  <p className="text-xs text-muted-foreground">Choose a category to refine your search</p>
+                </div>
               </div>
-              <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-9 gap-3">
                 {filters.map((filter) => {
                   const IconComponent = filter.icon;
                   const isSelected = selectedFilter === filter.id;
@@ -141,21 +145,30 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                       key={filter.id}
                       onClick={() => handleFilterClick(filter.id)}
                       className={cn(
-                        "flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-200 hover:scale-105 group",
+                        "flex flex-col items-center gap-3 p-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg group relative overflow-hidden",
                         isSelected
-                          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
-                          : "bg-secondary/50 hover:bg-secondary text-muted-foreground hover:text-foreground"
+                          ? "bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-xl shadow-primary/30 scale-105"
+                          : "bg-gradient-to-br from-secondary/80 to-secondary/40 hover:from-secondary hover:to-secondary/60 text-muted-foreground hover:text-foreground border border-border/50 hover:border-border"
                       )}
                     >
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-xl" />
+                      )}
                       <div className={cn(
-                        "w-10 h-10 rounded-lg flex items-center justify-center transition-colors",
+                        "w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 relative z-10",
                         isSelected 
-                          ? "bg-white/20" 
-                          : "bg-white/10 group-hover:bg-white/20"
+                          ? "bg-white/20 shadow-lg" 
+                          : "bg-background/80 group-hover:bg-background group-hover:shadow-md"
                       )}>
-                        <IconComponent className="h-5 w-5" />
+                        <IconComponent className={cn(
+                          "h-6 w-6 transition-all duration-300",
+                          isSelected ? "text-white" : "text-primary group-hover:scale-110"
+                        )} />
                       </div>
-                      <span className="text-xs font-medium text-center leading-tight">
+                      <span className={cn(
+                        "text-xs font-semibold text-center leading-tight relative z-10 transition-all duration-300",
+                        isSelected ? "text-white" : "group-hover:font-bold"
+                      )}>
                         {filter.label}
                       </span>
                     </button>

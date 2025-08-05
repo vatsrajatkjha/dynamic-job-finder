@@ -305,14 +305,32 @@ export const FilteredSearchResults: React.FC<SearchResultsProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="border-b border-border pb-4">
-        <h2 className="text-2xl font-bold">
-          Search results for "{query}"
-        </h2>
-        <p className="text-muted-foreground">
-          {filteredResults.count} result{filteredResults.count !== 1 ? 's' : ''} found
-        </p>
+    <div className="space-y-8">
+      <div className="bg-gradient-to-r from-card/80 to-card/40 backdrop-blur-sm border border-border/60 rounded-2xl p-6 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+              Search results for "{query}"
+            </h2>
+            <p className="text-muted-foreground mt-2 flex items-center gap-2">
+              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold">
+                {filteredResults.count}
+              </span>
+              {filteredResults.count} result{filteredResults.count !== 1 ? 's' : ''} found
+              {filter !== 'all' && (
+                <>
+                  <span className="text-muted-foreground/50">•</span>
+                  <span className="text-primary font-medium capitalize">{filter}</span>
+                </>
+              )}
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="text-xs text-muted-foreground bg-secondary/50 px-3 py-1 rounded-full border">
+              Filter: <span className="font-medium capitalize text-foreground">{filter}</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-6">

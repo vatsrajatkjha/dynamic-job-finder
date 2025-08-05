@@ -204,7 +204,7 @@ const Index = () => {
           </div>
         ) : (
           /* Search Results */
-          <div className="py-8">
+          <div className="py-8 bg-gradient-to-b from-background to-secondary/10">
             <FilteredSearchResults
               query={searchQuery}
               filter={selectedFilter}
