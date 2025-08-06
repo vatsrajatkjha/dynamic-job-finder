@@ -5,6 +5,7 @@ import { FilteredSearchResults } from '@/components/FilteredSearchResults';
 import { SearchFilterModal, FilterOptions } from '@/components/SearchFilterModal';
 import { SectionFilterModal } from '@/components/SectionFilterModal';
 import { CampusSection } from '@/components/CampusSection';
+import { UserTypeSection } from '@/components/UserTypeSection';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -496,38 +497,8 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Global Reach Section */}
-            <div className="py-20 bg-gradient-to-r from-primary/5 to-accent/5 rounded-3xl">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold mb-4">Global Opportunities</h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                  Connect with opportunities worldwide and build your international career
-                </p>
-              </div>
-              <div className="grid md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-primary/10 to-primary/20 flex items-center justify-center">
-                    <Globe className="h-10 w-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">150+</h3>
-                  <p className="text-muted-foreground">Countries Covered</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-accent/10 to-accent/20 flex items-center justify-center">
-                    <Users className="h-10 w-10 text-accent" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">5M+</h3>
-                  <p className="text-muted-foreground">Global Professionals</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-secondary/10 to-secondary/20 flex items-center justify-center">
-                    <Building className="h-10 w-10 text-secondary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-2">50K+</h3>
-                  <p className="text-muted-foreground">International Companies</p>
-                </div>
-              </div>
-            </div>
+            {/* User Type Section */}
+            <UserTypeSection />
           </>
         )}
 
