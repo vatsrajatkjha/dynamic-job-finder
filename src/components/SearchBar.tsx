@@ -10,6 +10,7 @@ interface SearchBarProps {
   selectedFilter: string;
   isExpanded: boolean;
   setIsExpanded: (expanded: boolean) => void;
+  hideSearchButton?: boolean;
 }
 
 import { Briefcase, Users, Building, FileText, Wrench, Calendar, GraduationCap, Users2, Search as SearchIcon } from 'lucide-react';
@@ -32,6 +33,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   selectedFilter,
   isExpanded,
   setIsExpanded,
+  hideSearchButton = false,
 }) => {
   const [query, setQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -110,16 +112,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                 <X className="h-4 w-4" />
               </Button>
             )}
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleSearch}
-              disabled={!query.trim()}
-              className="rounded-lg px-4 h-8 bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all duration-200"
-            >
-              <Search className="h-4 w-4 mr-1" />
-              <span className="font-medium text-sm">Search</span>
-            </Button>
+            {!hideSearchButton && (
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleSearch}
+                disabled={!query.trim()}
+                className="rounded-lg px-4 h-8 bg-primary hover:bg-primary/90 shadow-md shadow-primary/20 transition-all duration-200"
+              >
+                <Search className="h-4 w-4 mr-1" />
+                <span className="font-medium text-sm">Search</span>
+              </Button>
+            )}
           </div>
         </div>
 

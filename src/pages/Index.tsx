@@ -3,11 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { SearchBar } from '@/components/SearchBar';
 import { FilteredSearchResults } from '@/components/FilteredSearchResults';
 import { SearchFilterModal, FilterOptions } from '@/components/SearchFilterModal';
+import { SectionFilterModal } from '@/components/SectionFilterModal';
+import { CampusSection } from '@/components/CampusSection';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Users, Building, Briefcase, Star, ArrowRight, Shield, Clock, Target, Award, ChevronRight, PlayCircle, BookOpen, MessageSquare, Globe, Network, GraduationCap, Bell, Settings } from 'lucide-react';
+import antReLogo from '@/assets/antRe-logo.png';
+import campusHero from '@/assets/campus-hero.jpg';
 
 // Mock data for demonstration
 const mockJobs = [
@@ -108,7 +112,8 @@ const Index = () => {
   const [activeNavItem, setActiveNavItem] = useState('jobs');
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [showSectionModal, setShowSectionModal] = useState(false);
+  const [showJobFilterModal, setShowJobFilterModal] = useState(false);
   const [currentSearchQuery, setCurrentSearchQuery] = useState('');
   const [searchResults] = useState({
     jobs: mockJobs,
@@ -121,18 +126,33 @@ const Index = () => {
   const navItems = [
     { id: 'jobs', label: 'Jobs', icon: Briefcase },
     { id: 'companies', label: 'Companies', icon: Building },
+    { id: 'campus', label: 'Campus', icon: GraduationCap },
     { id: 'network', label: 'Network', icon: Network },
-    { id: 'learn', label: 'Learn', icon: GraduationCap },
+    { id: 'learn', label: 'Learn', icon: BookOpen },
   ];
 
   const handleSearch = (query: string) => {
     if (query.trim()) {
       setCurrentSearchQuery(query);
-      setShowFilterModal(true);
+      setShowSectionModal(true);
       setIsSearchExpanded(true);
     } else {
       setSearchQuery('');
       setCurrentSearchQuery('');
+    }
+  };
+
+  const handleSectionSelect = (section: string) => {
+    setShowSectionModal(false);
+    if (section === 'jobs') {
+      setShowJobFilterModal(true);
+    } else if (section === 'campus') {
+      setActiveNavItem('campus');
+      setSearchQuery(currentSearchQuery);
+    } else {
+      // For other sections, show filtered results directly
+      setSearchQuery(currentSearchQuery);
+      setSelectedFilter(section);
     }
   };
 
@@ -141,7 +161,7 @@ const Index = () => {
   };
 
   const handleApplyFilters = (filters: FilterOptions) => {
-    setShowFilterModal(false);
+    setShowJobFilterModal(false);
     // Navigate to job listing page with filters
     navigate('/jobs', { 
       state: { 
@@ -162,15 +182,13 @@ const Index = () => {
           <div className="flex items-center justify-between gap-8">
             {/* Logo */}
             <div className="flex items-center gap-3 flex-shrink-0">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-primary to-primary/80 flex items-center justify-center shadow-lg shadow-primary/25">
-                <Briefcase className="h-6 w-6 text-white" />
-              </div>
+              <img src={antReLogo} alt="Ant-re Logo" className="w-10 h-10 rounded-xl" />
               <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-                JobPortal
+                Ant-re
               </span>
             </div>
 
-            {/* Search Bar in Header */}
+            {/* Search Bar in Header - No Search Button */}
             <div className="flex-1 max-w-2xl mx-4">
               <SearchBar
                 onSearch={handleSearch}
@@ -178,6 +196,7 @@ const Index = () => {
                 selectedFilter={selectedFilter}
                 isExpanded={isSearchExpanded}
                 setIsExpanded={setIsSearchExpanded}
+                hideSearchButton={true}
               />
             </div>
 
@@ -217,16 +236,22 @@ const Index = () => {
       <main className="container mx-auto px-4">
         {!searchQuery ? (
           /* Hero Section */
-          <div className="py-24 text-center">
-            <div className="max-w-5xl mx-auto">
+          <div className="relative py-24 text-center overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/10 rounded-3xl"></div>
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-10 rounded-3xl"
+              style={{
+                backgroundImage: `url(${campusHero})`,
+              }}
+            ></div>
+            <div className="relative max-w-5xl mx-auto z-10">
               <h1 className="text-5xl md:text-7xl font-extrabold mb-8 bg-gradient-to-r from-foreground via-primary to-primary/80 bg-clip-text text-transparent leading-tight tracking-tight">
-                Find Your Dream Job Today
+                Your Career Journey Starts at Ant-re
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground mb-16 max-w-3xl mx-auto leading-relaxed font-medium">
-                Connect with top companies, discover exciting opportunities, and advance your career with our AI-powered job matching platform.
+                Connecting students, professionals, and top companies through campus recruitment, job opportunities, and career development programs.
               </p>
               
-
               {/* Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
                 <div className="text-center">
@@ -234,26 +259,34 @@ const Index = () => {
                   <div className="text-muted-foreground">Active Jobs</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-primary mb-2">10K+</div>
-                  <div className="text-muted-foreground">Companies</div>
+                  <div className="text-3xl font-bold text-primary mb-2">500+</div>
+                  <div className="text-muted-foreground">Partner Universities</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">1M+</div>
-                  <div className="text-muted-foreground">Job Seekers</div>
+                  <div className="text-muted-foreground">Students & Professionals</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary mb-2">95%</div>
-                  <div className="text-muted-foreground">Success Rate</div>
+                  <div className="text-muted-foreground">Placement Success</div>
                 </div>
               </div>
             </div>
           </div>
         ) : null}
 
-        {/* Search Filter Modal */}
+        {/* Section Filter Modal */}
+        <SectionFilterModal
+          isOpen={showSectionModal}
+          onClose={() => setShowSectionModal(false)}
+          searchQuery={currentSearchQuery}
+          onSectionSelect={handleSectionSelect}
+        />
+
+        {/* Job Filter Modal */}
         <SearchFilterModal
-          isOpen={showFilterModal}
-          onClose={() => setShowFilterModal(false)}
+          isOpen={showJobFilterModal}
+          onClose={() => setShowJobFilterModal(false)}
           searchQuery={currentSearchQuery}
           onApplyFilters={handleApplyFilters}
         />
@@ -271,15 +304,15 @@ const Index = () => {
           </section>
         )}
 
-        {/* Main Content - Hide when searching */}
-        {!searchQuery && (
+        {/* Main Content - Show based on active nav */}
+        {!searchQuery && activeNavItem !== 'campus' && (
           <>
             {/* Why Choose Us Section */}
             <div className="py-20">
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-4">Why Choose JobPortal?</h2>
+                <h2 className="text-4xl font-bold mb-4">Why Choose Ant-re?</h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Experience the future of job searching with our cutting-edge platform designed for modern professionals.
+                  Experience the future of career development with our comprehensive platform connecting students, professionals, and employers.
                 </p>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -497,6 +530,19 @@ const Index = () => {
             </div>
           </>
         )}
+
+        {/* Campus Content */}
+        {!searchQuery && activeNavItem === 'campus' && (
+          <div className="py-20">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-4">Campus Recruitment Hub</h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Bridging the gap between academic excellence and industry opportunities
+              </p>
+            </div>
+            <CampusSection />
+          </div>
+        )}
       </main>
 
       {/* Footer */}
@@ -505,10 +551,8 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-job-secondary flex items-center justify-center">
-                  <Briefcase className="h-5 w-5 text-white" />
-                </div>
-                <span className="text-xl font-bold">JobPortal</span>
+                <img src={antReLogo} alt="Ant-re Logo" className="w-8 h-8 rounded-lg" />
+                <span className="text-xl font-bold">Ant-re</span>
               </div>
               <p className="text-muted-foreground">
                 Your gateway to exciting career opportunities and professional growth.
@@ -543,7 +587,7 @@ const Index = () => {
             </div>
           </div>
           <div className="border-t border-border pt-8 mt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 JobPortal. All rights reserved.</p>
+            <p>&copy; 2024 Ant-re. All rights reserved.</p>
           </div>
         </div>
       </footer>
